@@ -62,7 +62,7 @@ function App() {
             <span>Kinetic</span>
             <span>Share</span>
           </h1>
-          <p>Upload and share the download link 🔗.</p>
+          <p>Catch your files and share them instantly ⚡</p>
 
           {/* Pokéball Upload Box */}
           <div className="pokeball-wrapper" onClick={onUploadClick}>
