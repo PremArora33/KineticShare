@@ -1,56 +1,163 @@
-* {
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+
+body {
   margin: 0;
   padding: 0;
+  overflow: hidden;
+  background: linear-gradient(135deg, #932ec2, #000000);
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* Floating Pokémon Upwards Anywhere */
+.flying-silhouettes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.silhouette {
+  position: absolute;
+  bottom: -100px;
+  width: 80px;
+  height: 80px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  animation: floatUp 18s linear infinite;
+  opacity: 0.8;
+}
+
+/* Random horizontal positions */
+.silhouette:nth-child(1) { left: 5%; animation-delay: 0s; }
+.silhouette:nth-child(2) { left: 20%; animation-delay: 4s; }
+.silhouette:nth-child(3) { left: 40%; animation-delay: 8s; }
+.silhouette:nth-child(4) { left: 60%; animation-delay: 12s; }
+.silhouette:nth-child(5) { left: 80%; animation-delay: 16s; }
+.silhouette:nth-child(6) { left: 30%; animation-delay: 2s; }
+.silhouette:nth-child(7) { left: 70%; animation-delay: 6s; }
+.silhouette:nth-child(8) { left: 90%; animation-delay: 10s; }
+
+@keyframes floatUp {
+  0% { transform: translateY(120vh) translateX(0) scale(1) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  50% { transform: translateY(60vh) translateX(20px) scale(1.05) rotate(7deg); }
+  90% { opacity: 1; }
+  100% { transform: translateY(-120vh) translateX(-20px) scale(1.1) rotate(15deg); opacity: 0; }
+}
+
+/* Center Layout */
+.main-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: relative;
+  z-index: 2;
 }
 
 .container {
-  background: #fff;
-  overflow: hidden;
-  border-radius: 5px;
-  display: flex;
+  position: relative;
 }
 
+/* Outer box with glow + hover lift effect */
 .wrapper {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  text-align: center;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.wrapper:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 0 40px rgba(255, 215, 0, 0.7);
+}
+
+.pokemon-title {
+  font-size: 3rem;
+  font-weight: bold;
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  padding: 40px;
+  gap: 8px;
 }
 
-.main-wrapper {
-  background-size: cover;
-  background-position: center;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.pokemon-title span:first-child {
+  color: #ffcb05;
+  text-shadow: 2px 2px 0 #3b4cca, 4px 4px 0 #2a75bb;
+  animation: bounce 1s infinite alternate;
 }
 
-h1 {
-  font-size: 40px;
-  font-weight: 600;
-  color: #445A6F;
-  margin: 40px 0;
+.pokemon-title span:last-child {
+  color: #3b4cca;
+  text-shadow: 2px 2px 0 #ffcb05, 4px 4px 0 #ffde00;
+  animation: bounce 1s infinite alternate 0.2s;
 }
 
-input {
-  margin: 20px 0;
-  width: 300px;
-  padding: 8px;
+@keyframes bounce {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-5px); }
 }
 
-input:focus-visible {
-  outline: none;
+/* Pokéball hover charging effect */
+.pokeball-wrapper {
+  cursor: pointer;
+  margin-top: 20px;
+  position: relative;
 }
 
-button {
-  width: 150px;
-  height: 40px;
-  border-radius: 5px;
-  background-color: #445A6F;
-  border: 1px solid #445A6F;
+.pokeball {
+  width: 160px;
+  transition: transform 0.3s ease;
+}
+
+.pokeball-wrapper:hover .pokeball {
+  animation: glowPulse 1.5s infinite alternate;
+}
+
+@keyframes glowPulse {
+  0% { filter: drop-shadow(0 0 10px #ff0000); }
+  100% { filter: drop-shadow(0 0 25px #ffcb05); }
+}
+
+/* Sparkles effect */
+.sparkles {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.pokeball-wrapper:hover .sparkles::before,
+.pokeball-wrapper:hover .sparkles::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  border-radius: 50%;
+  animation: sparkle 1s infinite ease-in-out;
+}
+
+.pokeball-wrapper:hover .sparkles::after {
+  animation-delay: 0.5s;
+}
+
+@keyframes sparkle {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  50% { transform: translate(40px, -40px) scale(0.5); opacity: 0.5; }
+  100% { transform: translate(-40px, 40px) scale(0); opacity: 0; }
+}
+
+a {
+  display: block;
+  margin-top: 15px;
   color: #fff;
-  font-size: 20px;
-  margin: 30px 0;
+  word-break: break-all;
 }

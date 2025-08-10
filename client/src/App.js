@@ -3,79 +3,78 @@ import './App.css';
 import { uploadFile } from './service/api';
 
 function App() {
-  // State for the selected file
   const [file, setFile] = useState('');
-  // State for the download link result
   const [result, setResult] = useState('');
-  // State for loading indicator
   const [loading, setLoading] = useState(false);
-  // State for error messages
   const [error, setError] = useState('');
-
-  // Reference to the hidden file input element
   const fileInputRef = useRef();
 
-  // Effect hook to handle file upload when a file is selected
   useEffect(() => {
     const getImage = async () => {
       if (file) {
         setLoading(true);
         setError('');
         setResult('');
-        
+
         try {
-          // Create FormData object to send file to server
           const data = new FormData();
           data.append("name", file.name);
           data.append("file", file);
-
-          // Upload file and get response
           const response = await uploadFile(data);
           setResult(response.path);
         } catch (err) {
-          // Handle upload errors
           setError(err.message || 'Upload failed. Please try again.');
         } finally {
           setLoading(false);
         }
       }
-    }
+    };
     getImage();
-  }, [file])
+  }, [file]);
 
-  // Function to trigger file input click
   const onUploadClick = () => {
     fileInputRef.current.click();
-  }
+  };
 
-  // Function to handle file selection
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
-    
-    // Basic file validation
     if (selectedFile) {
-      // Check file size (10MB limit)
       if (selectedFile.size > 10 * 1024 * 1024) {
         setError('File size must be less than 10MB');
         return;
       }
       setFile(selectedFile);
     }
-  }
+  };
 
   return (
-    <div className='main-wrapper' style={{ backgroundImage: `url('https://images.pexels.com/photos/23547/pexels-photo.jpg')` }}>
-      <div className='container'>
-        <div className='wrapper'>
-          <h1>AlgoU File Sharing!</h1>
-          <p>Upload and share the download link🔗.</p>
+    <div className="main-wrapper">
+      {/* Floating Pokémon silhouettes */}
+      <div className="flying-silhouettes">
+        <div className="silhouette" style={{ top: '20%', backgroundImage: "url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/25.png')" }}></div>
+        <div className="silhouette" style={{ top: '50%', animationDelay: '4s', backgroundImage: "url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/1.png')" }}></div>
+        <div className="silhouette" style={{ top: '70%', animationDelay: '8s', backgroundImage: "url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/4.png')" }}></div>
+      </div>
 
-          {/* Upload button */}
-          <button onClick={onUploadClick} disabled={loading}>
-            {loading ? 'Uploading...' : 'Upload'}
-          </button>
-          
-          {/* Hidden file input */}
+      <div className="container">
+        <div className="wrapper">
+          <h1 className="pokemon-title">
+            <span>Kinetic</span>
+            <span>Share</span>
+          </h1>
+          <p>Upload and share the download link 🔗.</p>
+
+          {/* Pokéball Upload Box */}
+          <div className="pokeball-wrapper" onClick={onUploadClick}>
+            <svg className="pokeball" viewBox="0 0 496 496" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="248" cy="248" r="240" fill="white" stroke="black" strokeWidth="16" />
+              <path d="M8,248a240,240 0 0,1 480,0" fill="red" stroke="black" strokeWidth="16"/>
+              <circle cx="248" cy="248" r="64" fill="white" stroke="black" strokeWidth="16"/>
+              <circle cx="248" cy="248" r="32" fill="white" stroke="black" strokeWidth="8"/>
+            </svg>
+            <div className="sparkles"></div>
+          </div>
+
           <input
             type="file"
             ref={fileInputRef}
@@ -83,12 +82,10 @@ function App() {
             onChange={handleFileChange}
           />
 
-          {/* Display error message if any */}
           {error && <p style={{ color: 'red', marginTop: '10px' }}>{error}</p>}
 
-          {/* Display download link when upload is successful */}
           {result && (
-            <a href={result} target='_blank' rel="noopener noreferrer" style={{ marginTop: '20px', display: 'block' }}>
+            <a href={result} target="_blank" rel="noopener noreferrer">
               {result}
             </a>
           )}
