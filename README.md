@@ -1,4 +1,4 @@
-# AlgoU File Sharing Application
+# Kinetic File Sharing Application
 
 A modern MERN stack application for secure file upload and sharing. Users can upload files and get shareable download links with download tracking.
 
@@ -35,8 +35,8 @@ Before running this application, make sure you have:
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/your-username/AlgoU-MERN-File-Sharing-Application.git
-cd AlgoU-MERN-File-Sharing-Application
+git clone https://github.com/PremArora33/KineticShare.git
+cd KineticShare
 ```
 
 ### 2. Backend Setup
@@ -105,7 +105,7 @@ The React app will start on `http://localhost:3000`
 ## Project Structure
 
 ```
-AlgoU-MERN-File-Sharing-Application/
+KineticShare/
 ├── client/                 # React frontend
 │   ├── src/
 │   │   ├── service/       # API service functions
